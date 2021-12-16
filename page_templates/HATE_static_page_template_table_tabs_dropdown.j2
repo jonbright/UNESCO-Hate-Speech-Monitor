@@ -1,0 +1,233 @@
+<html>
+  <head>
+		<title>{{tab_title}}</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1, maximum-scale=1">
+    <style>
+      body { 
+        background-color: white;
+        padding-left: 25%;
+        padding-right: 25%;
+        width: 50%;
+        font-family: 'Tahoma' ; 
+        color: black ;
+      }
+      h1   {color: rgb(65, 63, 63);}
+      p    {color: black;}
+      img {
+           width: 75%;
+           align-self: center;
+        }
+      .img-td {width: 75%}
+
+      .tab {
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+}
+
+.hide {
+  display: none;
+}
+
+/* Style the buttons that are used to open the tab content */
+.tab button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+  background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+  display: none;
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-top: none;
+  animation: fadeEffect 1s; /* Fading effect takes 1 second */
+}
+
+/* Go from zero to full opacity */
+@keyframes fadeEffect {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+      </style>
+
+
+</head>
+<body>
+
+<!-- Tab links -->
+<div class="tab">
+    <button class="tablinks" onclick="opentab(event, 'ewi')" id="defaultOpen">Early warning indicators</button>
+    <button class="tablinks" onclick="opentab(event, 'aka')">Automatic keyword analysis</button>
+    <button class="tablinks" onclick="opentab(event, 'meth')">About</button>
+</div>
+
+<div id="ewi" class="tabcontent">
+
+<h1>Hate Speech Overview for {{country}} for the period {{period}}</h1>
+
+<h2>Early warning indicators</h2>
+
+The early warning indicators are designed to provide an indication of when use of a specific keyword is increasing in the information environment, accompanied by statistics on how likely it is that the keyword is associated with hate speech. 
+
+These early warning indicators are updated on a weekly basis. The last update was on {{last_update}}. 
+
+<br/>
+
+<table>
+<tr>
+<td class = 'img-td'>
+<img src="{{ew_graphics['summary_graphic']}}">
+</td>
+<td>
+This figure shows the number of posts made on Facebook containing the keyword of interest and the number of reactions and shares these posts received during this week. Bars highlighted in green are below the average, orange are about average, and red is above average.
+</td>
+</tr>
+</table>
+
+<br/><br/>
+
+<p><img src="{{ew_graphics.detailed_summary_graphic}}"></p>
+
+<p>This figure breaks down the number of reactions received into individual reaction types. </p>
+
+here - auto highlight which stats are out of range
+
+<p><img src="{{ew_graphics.summary_per_keyword}}"></p>
+
+<p>This figure looks at the amount of content produced during the week of interest for each keyword, again compared to historical averages.</p>
+
+here - auto highlight which stats are out of range. refer to accuracy % per keyword. 
+
+
+<p><img src="{{ew_graphics.summary_per_keyword_reaction}}"></p>
+
+<p>This figure looks at the amount of reactions produced during the week of interest for each keyword, again compared to historical averages.</p>
+
+</div>
+
+<div id="aka" class="tabcontent">
+<h2>Automatic keyword analysis</h2>
+
+<!--drop down menu to select keyword 
+<select class="div-toggle" data-target=".my-info-1">
+  <option value="orange" data-show=".citrus">Orange</option>
+  <option value="lemon" data-show=".citrus">Lemon</option>
+  <option value="apple" data-show=".pome">Apple</option>
+  <option value="pear" data-show=".pome">Pear</option>
+</select>
+
+
+loop creates all the divs with all the data in them
+<div class="my-info-1">
+  <div class="citrus hide">Citrus is...</div>
+  <div class="pome hide">A pome is...</div>
+</div> -->
+
+In this automatic analysis section we provide a deep dive into individual keywords, to show both whether they are increasing
+over time and how they are being used this week. 
+
+#drop down menu goes here 
+
+{% for keyword_data in kw_graphics  %}
+
+<div class='{{ keyword_data.keyword }} hide'>
+
+<p>precision of the keyword, number of posts found with this keyword</p>
+
+<p><img src="{{ keyword_data.keyword_usage_over_time}}"></p>
+
+#this image should just contain one keyword. in the future a drop down menu should allow different keyword selection. 
+
+This image shows whether posts containing the keyword have been increasing on social media for the country of interest. 
+
+<p><img src="{{ keyword_data.keyword_reaction_over_time}}"></p>
+
+#this image should just contain one keyword. in the future a drop down menu should allow different keyword selection. 
+
+This image shows whether reactions to posts containing the keyword have been increasing on social media for the country of interest. 
+
+<p><img src="{{ keyword_data.keyword_copresence}}"></p>
+
+This image shows the top 5 keywords that this keyword is currently being used with. 
+
+<!-- topic model loop -->
+{% for topic in keyword_data.topic_model %}
+
+<p> {{topic.top_terms}} </p>
+
+<p> {{topic.top_posts}} </p>
+
+{% endfor %}
+
+{% endfor %}
+
+</div>
+
+<div id="meth" class="tabcontent">
+
+    some details here about the methodology
+
+    could also include the keyword accuracy breakdowns per country 
+
+    credits etc. for the project 
+</div>
+
+
+<script>
+    function opentab(evt, tabname) {
+      // Declare all variables
+      var i, tabcontent, tablinks;
+    
+      // Get all elements with class="tabcontent" and hide them
+      tabcontent = document.getElementsByClassName("tabcontent");
+      for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+      }
+    
+      // Get all elements with class="tablinks" and remove the class "active"
+      tablinks = document.getElementsByClassName("tablinks");
+      for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+      }
+    
+      // Show the current tab, and add an "active" class to the button that opened the tab
+      document.getElementById(tabname).style.display = "block";
+      evt.currentTarget.className += " active";
+    }
+    
+    // Get the element with id="defaultOpen" and click on it
+    document.getElementById("defaultOpen").click();
+    
+    </script>
+
+    <script>
+        $(document).on('change', '.div-toggle', function() {
+            var target = $(this).data('target');
+            var show = $("option:selected", this).data('show');
+            $(target).children().addClass('hide');
+            $(show).removeClass('hide');
+        });
+        $(document).ready(function(){
+            $('.div-toggle').trigger('change');
+        });
+</script>
+
+</body>
+</html>

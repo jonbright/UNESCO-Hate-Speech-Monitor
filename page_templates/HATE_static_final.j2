@@ -1,0 +1,226 @@
+<html>
+  <head>
+		<title>{{tab_title}}</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1, maximum-scale=1">
+    <style>
+      body { 
+        background-color: white;
+        padding-left: 25%;
+        padding-right: 25%;
+        width: 50%;
+        font-family: 'Tahoma' ; 
+        color: black ;
+      }
+      h1   {color: rgb(65, 63, 63);}
+      p    {color: black;}
+      img {
+           width: 75%;
+           align-self: center;
+        }
+      .img-td {width: 75%}
+
+      .tab {
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+}
+
+/* Style the buttons that are used to open the tab content */
+.tab button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+  background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+  display: none;
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-top: none;
+  animation: fadeEffect 1s; /* Fading effect takes 1 second */
+}
+
+/* Go from zero to full opacity */
+@keyframes fadeEffect {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+      </style>
+
+
+</head>
+<body>
+
+<!-- Tab links -->
+<div class="tab">
+    <button class="tablinks" onclick="opentab(event, 'ewi')" id="defaultOpen">Early warning indicators</button>
+    <button class="tablinks" onclick="opentab(event, 'aka')">Automatic keyword analysis</button>
+    <button class="tablinks" onclick="opentab(event, 'meth')">About</button>
+</div>
+
+<div id="ewi" class="tabcontent">
+
+<h1>Hate Speech Overview for {{country}} for the period {{period}}</h1>
+
+<h2>Early warning indicators</h2>
+
+The early warning indicators are designed to provide an indication of when use of a specific keyword is increasing in the information environment, accompanied by statistics on how likely it is that the keyword is associated with hate speech. 
+
+These early warning indicators are updated on a weekly basis. The last update was on {{last_update}}. 
+
+<br/>
+
+<table>
+<tr>
+<td class = 'img-td'>
+<img src="{{ew_graphics['summary_graphic']}}">
+</td>
+<td>
+This figure shows the number of posts made on Facebook containing the keyword of interest and the number of reactions and shares these posts received during this week. Bars highlighted in green are below the average, orange are about average, and red is above average.
+</td>
+</tr>
+</table>
+
+<br/><br/>
+
+<p><img src="{{ew_graphics.detailed_summary_graphic}}"></p>
+
+<p>This figure breaks down the number of reactions received into individual reaction types. </p>
+
+<p><img src="{{ew_graphics.summary_per_keyword}}"></p>
+
+<p>This figure looks at the amount of content produced during the week of interest for each keyword, again compared to historical averages.</p>
+
+<p><img src="{{ew_graphics.summary_per_keyword_reaction}}"></p>
+
+<p>This figure looks at the amount of reactions produced during the week of interest for each keyword, again compared to historical averages.</p>
+
+</div>
+
+<div id="aka" class="tabcontent">
+<h2>Automatic keyword analysis</h2>
+
+<!--drop down menu to select keyword http://jsfiddle.net/TLBvx/252/--> 
+
+In this automatic analysis section we provide a deep dive into individual keywords, to show both whether they are increasing
+over time and how they are being used this week. 
+
+<!-- loop creates all the divs with all the data in them-->
+{% for keyword_data in kw_graphics  %}
+
+<div class='{{ keyword_data.keyword }}'>
+
+<h3>{{ keyword_data.keyword }}</h3>
+
+<p>This page summarises data for the keyword: <b>{{ keyword_data.keyword }}</b>. In the observation window, <b>{{ keyword_data.num_posts }} posts</b> were found containing this keyword in this country. Our prior research indicates that <b>{{ keyword_data.hate_perc_kw }}% of posts containing this keyword are classified as hate speech</b></p>
+
+<p><img src="{{ keyword_data.keyword_usage_over_time}}"></p>
+
+This image shows whether posts containing the keyword have been increasing on social media for the country of interest. 
+
+<p><img src="{{ keyword_data.keyword_reaction_over_time}}"></p>
+
+This image shows whether reactions to posts containing the keyword have been increasing on social media for the country of interest. 
+
+<p><img src="{{ keyword_data.keyword_copresence}}"></p>
+
+This image shows the top 5 keywords that this keyword is currently being used with. 
+
+<!-- topic model loop -->
+{% for topic in keyword_data.topic_model %}
+
+<p> {{topic.top_terms}} </p>
+
+<!--<p> {{topic.top_posts}} </p>-->
+
+{% endfor %}
+
+The above shows the top terms for a topic model based on posts using the keyword. 
+
+</div>
+
+<hr>
+
+{% endfor %}
+
+</div>
+
+</div>
+
+<div id="meth" class="tabcontent">
+
+  <h3>About</h3>
+  <p>This site is part of the Global Hate Speech Monitor project, run jointly by the <a href='https://www.oii.ox.ac.uk/'>Oxford Internet Institute</a> and <a href='https://en.unesco.org/'>UNESCO</a>.</p>
+
+  <p>The aim of the project is to provide a simple generic toolkit for monitoring trends in hate speech in an individual country which involves collection of data, analysis, and visualisation in a way that be quickly and easily made use of by local policymakers. This site is one instance of the toolkit, focussed on {{country}}. However the toolkit can theoretically be applied to any country or region.</p> 
+
+  <h3>Methodology</h3>
+
+  <p>The basis of the site is a list of keywords provided by UNESCO's {{country}} Office which are considered of concern and which, depending on the context in which they are used, could be potentially hateful or contained within a hateful discourse. The aim of the tool is to track usage of these keywords over time on social media, and provide indications when they are being used more or less than average.</p> 
+
+  <p>Data for the tool is collected from Facebook through the <a href='https://www.crowdtangle.com/'>CrowdTangle</a> API. It is refreshed every day, with the latest update covering the period {{period}}. For each keyword in our list, a search is conducted through CrowdTangle for posts created by groups and pages located in {{country}}. The data is compated to historic data for the posts over the previous year.</p> 
+
+  <h3>Keywords</h3>
+
+  <p>The current keywords in use for {{country}} are as follows:</p>
+
+  <p>{{keywords}}</p>
+
+  <p>The research team collected a sample of data containing the keywords above and coded each piece in terms of whether it was actually hate speech or not. The results of this exercise are shown in the graphic below. They are worth bearing in mind when interpreting the amount of posts observed containing hate speech in a given country. 
+
+  <p><img src='{{keyword_graphic}}'></p>
+
+  <h3>Contributors</h3>
+
+  <p><a href='https://www.oii.ox.ac.uk/people/profiles/jonathan-bright/'>Jonathan Bright</a> developed the code base and produced the design and analysis.</p>
+
+  <p>Anne Ploin, Reja Wyss and Antonella Perini analysed the country data.</p>
+
+</div>
+
+
+<script>
+    function opentab(evt, tabname) {
+      // Declare all variables
+      var i, tabcontent, tablinks;
+    
+      // Get all elements with class="tabcontent" and hide them
+      tabcontent = document.getElementsByClassName("tabcontent");
+      for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+      }
+    
+      // Get all elements with class="tablinks" and remove the class "active"
+      tablinks = document.getElementsByClassName("tablinks");
+      for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+      }
+    
+      // Show the current tab, and add an "active" class to the button that opened the tab
+      document.getElementById(tabname).style.display = "block";
+      evt.currentTarget.className += " active";
+    }
+    
+    // Get the element with id="defaultOpen" and click on it
+    document.getElementById("defaultOpen").click();
+    
+    </script>
+
+</body>
+</html>

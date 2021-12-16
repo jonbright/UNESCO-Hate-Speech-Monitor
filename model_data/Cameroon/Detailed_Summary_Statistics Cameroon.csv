@@ -1,0 +1,15 @@
+"","endDate","measure","value","hist_mean","lowCI","hiCI","interpretation","col","label"
+"1",2021-11-15,"likeCount",103669,65663.137254902,56808.9194161054,74517.3550936985,"higher than average","#E64819","Num. Likes:
+higher than average"
+"2",2021-11-15,"sadCount",22831,2519.25490196078,2111.20202211165,2927.30778180992,"higher than average","#E64819","Num. Sads:
+higher than average"
+"3",2021-11-15,"angryCount",2765,336.725490196078,272.612951616545,400.838028775612,"higher than average","#E64819","Num. Angries:
+higher than average"
+"4",2021-11-15,"loveCount",1975,2027.66666666667,1750.06817169807,2305.26516163527,"about average","#FFA000","Num. Loves:
+about average"
+"5",2021-11-15,"careCount",442,281.921568627451,238.215524944298,325.627612310604,"higher than average","#E64819","Num. Cares:
+higher than average"
+"6",2021-11-15,"wowCount",496,322.019607843137,236.448879151277,407.590336534997,"higher than average","#E64819","Num. Wows:
+higher than average"
+"7",2021-11-15,"hahaCount",2596,5352.58823529412,389.390988161927,10315.7854824263,"about average","#FFA000","Num. Hahas:
+about average"

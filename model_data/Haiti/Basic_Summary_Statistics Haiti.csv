@@ -1,0 +1,7 @@
+"","endDate","measure","value","hist_mean","lowCI","hiCI","interpretation","col","label"
+"1",2021-11-12,"hitCount",247,159.745098039216,144.494892899436,174.995303178995,"higher than average","#E64819","Num. Posts:
+higher than average"
+"2",2021-11-12,"shareCount",36904,20947.5294117647,17730.6269241992,24164.4318993302,"higher than average","#E64819","Num. Shares:
+higher than average"
+"3",2021-11-12,"reac_count",171631,65921.9803921569,53823.0436790058,78020.917105308,"higher than average","#E64819","Num. Reactions:
+higher than average"
