@@ -8,7 +8,9 @@ import pandas as pd
 
 #GLOB - common settings across all pages
 TAB_TITLE = 'UNESCO / OII Hate Speech Monitor'
-STATIC_PAGE_DIR = 'pages/'
+STATIC_PAGE_DIR = HATE_common.main_folder() + 'pages/'
+
+print('Producing static pages')
 
 
 print('Reading in country data')
@@ -96,7 +98,7 @@ for country in countries:
 
     #Finally load template and render
     template = jinja2.Environment( 
-                loader=jinja2.FileSystemLoader('./'),
+                loader=jinja2.FileSystemLoader(HATE_common.main_folder()),
                 undefined=jinja2.StrictUndefined      
                 ).get_template('page_templates/HATE_static_final.j2')
     rendered_page = template.render(render_dict)
@@ -107,3 +109,6 @@ for country in countries:
     f = open(STATIC_PAGE_DIR + outputfile,'w') 
     f.write(rendered_page)
     f.close()
+
+
+print('Static pages complete')

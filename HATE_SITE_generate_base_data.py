@@ -18,7 +18,7 @@ print('Initialising')
 #GLOB
 ENDPOINT = 'https://api.crowdtangle.com/posts/search'
 API_TOKEN = HATE_api_token.token()
-EXCLUDES = ['Haiti']
+EXCLUDES = ['']
 
 #set up timing data
 now = datetime.datetime.now()
@@ -84,6 +84,9 @@ for country in countries:
                 print('Malformatted JSON')
                 print(resp.content)
                 sys.exit()
+
+            #delete posts - we don't actually need them, just the metadata
+            del(obj['result']['posts'])
 
             #add in search meta data
             obj['searched_keyword'] = kw_entry['kw']

@@ -48,7 +48,7 @@ for country in countries:
                 'includeSummary' : 'true',
                 'startDate' : period_start_date_formatted,
                 'endDate' : period_end_date_formatted,
-                'count' : 5, #we aren't interested in actually getting posts, just the meta summary, so count can be small
+                'count' : 100, #we actually need posts for the week to do the collocations and topic model
                 'platforms' : 'facebook',
                  #'language' : kw_entry['language'], do we need lang specification if we also have country?
                 'sortBy' : 'date',

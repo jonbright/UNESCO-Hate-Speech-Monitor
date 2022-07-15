@@ -104,6 +104,11 @@ def create_topic_model(keyword, infilename, outfilename, country, period_end_dat
         if obj['endDate'] != period_end_date:
             continue
 
+        #bug fix here, caused by some old data with no posts in
+        #shouldn't be relevant going forward 
+        if not 'posts' in obj['result']:
+            continue
+
         for msg in obj['result']['posts']:
             #one_ct_fb.write(json.dumps(msg))
 

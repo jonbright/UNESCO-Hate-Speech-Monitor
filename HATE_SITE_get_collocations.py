@@ -6,6 +6,7 @@ from nltk.collocations import BigramCollocationFinder
 from nltk.metrics import BigramAssocMeasures
 import pandas as pd
 import datetime
+import sys
 
 
 
@@ -49,6 +50,10 @@ def get_collocations(kws_list, filename, period_end_date, outfilename):
         if obj['endDate'] != period_end_date:
             continue
 
+        #bug fix here, caused by some old data with no posts in
+        #shouldn't be relevant going forward 
+        if not 'posts' in obj['result']:
+            continue
        
 
         for msg in obj['result']['posts']:

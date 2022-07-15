@@ -118,7 +118,8 @@ This figure shows the number of posts made on Facebook containing the keyword of
 
 <!--drop down menu to select keyword http://jsfiddle.net/TLBvx/252/--> 
 
-In this automatic analysis section we provide a deep dive into individual keywords, to show both whether they are increasing over time and how they are being used this week. 
+In this automatic analysis section we provide a deep dive into individual keywords, to show both whether they are increasing
+over time and how they are being used this week. 
 
 <!-- loop creates all the divs with all the data in them-->
 {% for keyword_data in kw_graphics  %}
@@ -127,7 +128,7 @@ In this automatic analysis section we provide a deep dive into individual keywor
 
 <h3>{{ keyword_data.keyword }}</h3>
 
-<p>This page summarises data for the keyword: <b>{{ keyword_data.keyword }}</b>. In the observation window, <b>{{ keyword_data.num_posts }} posts</b> were found containing this keyword in this country. In the <b>About</b> section you can see the proportion of posts containing these keywords that were found to contain hate speech.</p>
+<p>This page summarises data for the keyword: <b>{{ keyword_data.keyword }}</b>. In the observation window, <b>{{ keyword_data.num_posts }} posts</b> were found containing this keyword in this country. Our prior research indicates that <b>{{ keyword_data.hate_perc_kw }}% of posts containing this keyword are classified as hate speech</b></p>
 
 <p><img src="{{ keyword_data.keyword_usage_over_time}}"></p>
 
