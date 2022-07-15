@@ -8,7 +8,7 @@ import requests
 import time
 import HATE_common
 import sys
-import HATE_api_token
+import HATE_api_token_personal
 
 #FUNC
 print('Initialising')
@@ -16,7 +16,7 @@ print('Initialising')
 #GLOB
 #Set up API
 ENDPOINT = 'https://api.crowdtangle.com/posts/search'
-API_TOKEN = HATE_api_token.token()
+API_TOKEN = HATE_api_token_personal.token()
 
 #Timing
 period_end_date = datetime.datetime.now()
