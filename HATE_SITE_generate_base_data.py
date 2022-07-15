@@ -11,13 +11,13 @@ import json
 import requests
 import sys
 import time
-import HATE_api_token
+import HATE_api_token_personal
 
 print('Initialising')
 
 #GLOB
 ENDPOINT = 'https://api.crowdtangle.com/posts/search'
-API_TOKEN = HATE_api_token.token()
+API_TOKEN = HATE_api_token_personal.token()
 EXCLUDES = ['']
 
 #set up timing data
