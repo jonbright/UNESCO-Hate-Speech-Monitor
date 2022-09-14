@@ -1,0 +1,10 @@
+crontab
+
+
+/dcms-data/unesco_hate/website/
+
+python3 HATE_SITE_collect_weekly_data.py
+
+python3 HATE_SITE_generate_report_materials.py
+
+python3 'HATE_SITE_produce_static_pages 2.0.py'
